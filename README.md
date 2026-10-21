@@ -26,8 +26,8 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 
 ## Rencana Mitigasi
 - [x] Analisis akar masalah & reproduksi (Fase 1)
-- [ ] Implementasi fail-fast caller signature check via `Binder.getCallingUid()` (Fase 2)
-- [ ] Batasi panjang string parameter `COMPONENT` dan `NODE_ID` (Fase 2)
-- [ ] Terapkan LRU cache berkapasitas tetap pada `OnboardingTaskStateManager` (Fase 2)
-- [ ] Berikan batas waktu atas (*clamp*) pada `delayFor` dan kuota task per UID (Fase 2)
+- [x] Implementasi fail-fast caller signature check via `Binder.getCallingUid()` (Fase 2)
+- [x] Batasi panjang string parameter `COMPONENT` dan `NODE_ID` (Fase 2)
+- [x] Terapkan LRU cache berkapasitas tetap pada `OnboardingTaskStateManager` (Fase 2)
+- [x] Berikan batas waktu atas (*clamp*) pada `delayFor` dan kuota task per UID (Fase 2)
 - [ ] Verifikasi uji regresi dan kestabilan heap (Fase 3)
