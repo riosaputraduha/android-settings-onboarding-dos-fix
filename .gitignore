@@ -1,0 +1,31 @@
+gitignore
+# Android / Gradle
+.gradle/
+build/
+*.iml
+.idea/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Output Build & Binaries
+*.apk
+*.aab
+*.dex
+*.class
+
+# Memory Dumps & Profiling
+*.hprof
+*.prof
+*.trace
+
+# Logs & Temporary files
+*.log
+*.tmp
+logcat.txt
+crash_report.txt
+
+# OS Generated
+.DS_Store
+Thumbs.db
