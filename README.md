@@ -23,6 +23,7 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 - `docs/` : Laporan teknis lengkap temuan F-03.
 - `pocs/` : Kode aplikasi PoC reproduksi eksploitasi saturasi heap dan unbounded delay.
 - `patches/` : Rekomendasi perubahan kode dan berkas patch untuk mitigasi.
+- `tests/` : Test suite unit/integrasi dan prosedur verifikasi kestabilan memori.
 
 ## Rencana Mitigasi
 - [x] Analisis akar masalah & reproduksi (Fase 1)
@@ -30,4 +31,4 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 - [x] Batasi panjang string parameter `COMPONENT` dan `NODE_ID` (Fase 2)
 - [x] Terapkan LRU cache berkapasitas tetap pada `OnboardingTaskStateManager` (Fase 2)
 - [x] Berikan batas waktu atas (*clamp*) pada `delayFor` dan kuota task per UID (Fase 2)
-- [ ] Verifikasi uji regresi dan kestabilan heap (Fase 3)
+- [x] Verifikasi uji regresi dan kestabilan heap (Fase 3)
