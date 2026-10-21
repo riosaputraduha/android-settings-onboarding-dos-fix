@@ -8,6 +8,7 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 |---|---|
 | **ID Temuan** | F-03 |
 | **Tingkat Keparahan** | MEDIUM (Local Denial of Service) |
+| **Status Akhir** | **RESOLVED / MITIGATED** |
 | **Komponen Terdampak** | `android.onboarding` task manager, host `com.android.settings` |
 | **Target Build** | Android 17 userdebug (`SettingsGoogle` system_ext build) |
 | **Hak Akses Pemanggil** | Zero-permission (UID 10xxx) |
@@ -20,7 +21,7 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 4. Parameter `delayFor` pada `DiagnosisProviderTask` tidak memiliki batas atas (*unbounded clamp*), menahan coroutine/thread di memori tanpa batas waktu.
 
 ## Struktur Repositori
-- `docs/` : Laporan teknis lengkap temuan F-03.
+- `docs/` : Laporan teknis temuan F-03 dan Laporan Akhir Remediasi (`FINAL_REPORT.md`).
 - `pocs/` : Kode aplikasi PoC reproduksi eksploitasi saturasi heap dan unbounded delay.
 - `patches/` : Rekomendasi perubahan kode dan berkas patch untuk mitigasi.
 - `tests/` : Test suite unit/integrasi dan prosedur verifikasi kestabilan memori.
@@ -32,3 +33,8 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 - [x] Terapkan LRU cache berkapasitas tetap pada `OnboardingTaskStateManager` (Fase 2)
 - [x] Berikan batas waktu atas (*clamp*) pada `delayFor` dan kuota task per UID (Fase 2)
 - [x] Verifikasi uji regresi dan kestabilan heap (Fase 3)
+- [x] Penyusunan dokumentasi dan laporan akhir remediasi (Fase 4)
+
+## Hasil Remediasi & Laporan Lengkap
+Dokumentasi lengkap hasil mitigasi, metrik kestabilan memori sebelum/sesudah patch, serta rekomendasi jangka panjang dapat dibaca pada:
+👉 [docs/FINAL_REPORT.md](docs/FINAL_REPORT.md)
