@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.untrusted.poc">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:allowBackup="true"
         android:icon="@android:drawable/ic_menu_camera"
-        android:label="@string/app_name"
+        android:label="POC-A17-F03"
         android:theme="@style/Theme.POCApp">
         <activity
             android:name=".MainActivity"
@@ -16,5 +14,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
