@@ -10,7 +10,7 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 | **Tingkat Keparahan** | MEDIUM (Local Denial of Service) |
 | **Status Akhir** | **RESOLVED / MITIGATED** |
 | **Komponen Terdampak** | `android.onboarding` task manager, host `com.android.settings` |
-| **Target Build** | Android 17 userdebug (`SettingsGoogle` system_ext build) |
+| **Target Build** | Android 17.0 ("CinnamonBun" API 37.0 / x86_64, userdebug runtime, `SettingsGoogle` system_ext build) |
 | **Hak Akses Pemanggil** | Zero-permission (UID 10xxx) |
 | **Dampak** | Exhaustion memori Java Heap hingga memicu `OutOfMemoryError` dan crash pada proses sistem UID 1000 |
 

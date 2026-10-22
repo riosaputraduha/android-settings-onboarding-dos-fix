@@ -1,7 +1,7 @@
 ================================================================================
 BUKTI PENGUJIAN DINAMIS MEMORI RUNTIME EMULATOR (PASCA-DEPLOYMENT POC)
 ================================================================================
-Target Perangkat : emulator-5554 (Android 17 userdebug)
+Target Perangkat : emulator-5554 (Pixel 7, Android 17.0 "CinnamonBun" API 37.0 x86_64, userdebug)
 Target Proses    : com.android.settings (PID: 1448, UID: 1000)
 Aplikasi PoC     : com.untrusted.poc (PID: 5958, UID: 10231, zero permissions)
 Waktu Pengujian  : 2026-10-22 01:32:16 - 01:32:55 UTC

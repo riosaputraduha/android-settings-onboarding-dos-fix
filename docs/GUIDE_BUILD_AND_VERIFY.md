@@ -7,7 +7,7 @@ Dokumen ini adalah panduan teknis operasional yang **telah teruji dan terbukti b
 ## 1. Arsitektur Lingkungan & Spesifikasi Sistem
 
 * **Host OS:** Windows 11 Pro 64-bit
-* **Android Emulator:** AVD `Pixel_7` (Android 17 / API level 35/VanillaIceCream, userdebug runtime), terhubung sebagai serial `emulator-5554`
+* **Android Emulator:** AVD `Pixel 7` (Android 17.0 "CinnamonBun" | x86_64 | API 37.0, userdebug runtime), terhubung sebagai serial `emulator-5554`
 * **Android SDK:** Terpasang di `$env:LOCALAPPDATA\Android\Sdk`
   * Platform-Tools (`adb.exe` version 35.0.2+)
   * Emulator Engine (`emulator.exe` version 35.2.10+)

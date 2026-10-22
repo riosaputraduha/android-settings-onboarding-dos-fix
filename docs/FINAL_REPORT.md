@@ -5,7 +5,7 @@
 | **ID Temuan** | F-03 |
 | **Judul Kerentanan** | Onboarding Task Manager Accepts Unverified Caller Identity Leading to Heap Exhaustion DoS |
 | **Komponen Target** | `android.onboarding` Task Manager (`com.android.settings`, UID 1000) |
-| **Target Build Terdampak** | Android 17 userdebug (`emulator-5566`, SettingsGoogle 107 MB system_ext) |
+| **Target Build Terdampak** | Android 17.0 ("CinnamonBun" API 37.0 / x86_64, userdebug runtime, SettingsGoogle 107 MB system_ext) |
 | **Tingkat Keparahan Awal** | **MEDIUM** (Local Denial of Service) |
 | **Status Akhir** | **RESOLVED / MITIGATED** |
 | **Tanggal Penyelesaian** | 21 Oktober 2026 |
@@ -103,7 +103,7 @@ Seluruh skenario pengujian unit dan integrasi menghasilkan status **PASS**:
 | **Kondisi Proses PID** | Crash fatal `OutOfMemoryError` | Tidak ada crash (0 crash) | **PASS** |
 
 ### C. Validasi Runtime Emulator Nyata & Kompilasi AOSP WSL 2
-1. **Verifikasi Runtime Android 17 (emulator-5554):** Pengujian dinamis menggunakan aplikasi PoC (`com.untrusted.poc`, UID 10231) terhadap target sistem `com.android.settings` (PID 1448) dipantau secara real-time via `dumpsys meminfo`. Memori Dalvik Heap terpantau stabil pada 10.5 MB - 10.6 MB dan Total PSS pada ~42.0 MB tanpa lonjakan memori atau crash (tersimpan di `pocs/POC-A17-F03-MEMDOS/evidence/live-emulator-test.log`).
+1. **Verifikasi Runtime Android 17 (Pixel 7, Android 17.0 "CinnamonBun" API 37.0 x86_64, emulator-5554):** Pengujian dinamis menggunakan aplikasi PoC (`com.untrusted.poc`, UID 10231) terhadap target sistem `com.android.settings` (PID 1448) dipantau secara real-time via `dumpsys meminfo`. Memori Dalvik Heap terpantau stabil pada 10.5 MB - 10.6 MB dan Total PSS pada ~42.0 MB tanpa lonjakan memori atau crash (tersimpan di `pocs/POC-A17-F03-MEMDOS/evidence/live-emulator-test.log`).
 2. **Verifikasi Kompilasi & Integritas Patch (WSL 2):** Patch dievaluasi langsung pada working tree AOSP `packages/apps/Settings`. Berkas patch diperbarui secara presisi via `git diff --staged` dan dikompilasi sukses menggunakan `kotlinc` (dengan classpath `android.jar` API 35) menghasilkan 9 berkas bytecode `.class` tanpa peringatan atau error.
 
 ---

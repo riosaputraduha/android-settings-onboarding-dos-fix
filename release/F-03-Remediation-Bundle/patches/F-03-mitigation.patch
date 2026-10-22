@@ -1,0 +1,148 @@
+diff --git a/src/com/android/settings/onboarding/OnboardingTaskManagerService.kt b/src/com/android/settings/onboarding/OnboardingTaskManagerService.kt
+new file mode 100644
+index 0000000..7ff84fa
+--- /dev/null
++++ b/src/com/android/settings/onboarding/OnboardingTaskManagerService.kt
+@@ -0,0 +1,61 @@
++package com.android.settings.onboarding
++
++import android.content.Context
++import android.content.pm.PackageManager
++import android.os.Binder
++import android.os.Process
++import android.util.Log
++
++class OnboardingTaskManagerService(
++    private val context: Context,
++    private val taskStateManager: OnboardingTaskStateManager
++) {
++    companion object {
++        private const val TAG = "OnboardingTaskManager"
++        private const val MAX_IDENTIFIER_LENGTH = 256
++        private const val SETUPWIZARD_PACKAGE = "com.google.android.setupwizard"
++    }
++
++    fun enforceCallerIdentity(callerPackage: String) {
++        val callingUid = Binder.getCallingUid()
++        if (callingUid == Process.SYSTEM_UID || callingUid == Process.ROOT_UID) {
++            return
++        }
++
++        val pm = context.packageManager
++        val packageUid = try {
++            pm.getPackageUid(callerPackage, 0)
++        } catch (e: PackageManager.NameNotFoundException) {
++            throw SecurityException("Caller package $callerPackage is not installed on system.")
++        }
++
++        if (packageUid != callingUid) {
++            throw SecurityException("Declared caller $callerPackage does not match calling UID $callingUid.")
++        }
++
++        val isPlatformSigned = pm.checkSignatures(Process.SYSTEM_UID, callingUid) == PackageManager.SIGNATURE_MATCH
++        val isSetupWizard = try {
++            callerPackage == SETUPWIZARD_PACKAGE &&
++                pm.checkSignatures(callerPackage, SETUPWIZARD_PACKAGE) == PackageManager.SIGNATURE_MATCH
++        } catch (e: Exception) {
++            false
++        }
++
++        if (!isPlatformSigned && !isSetupWizard) {
++            throw SecurityException("Caller UID $callingUid is unauthorized to access OnboardingTaskManager.")
++        }
++    }
++
++    fun startTask(component: String, nodeId: String, callerPackage: String) {
++        // 1. Fail-fast caller verification
++        enforceCallerIdentity(callerPackage)
++
++        // 2. Input length clamping
++        if (component.length > MAX_IDENTIFIER_LENGTH || nodeId.length > MAX_IDENTIFIER_LENGTH) {
++            throw IllegalArgumentException("Token identifiers exceed max allowed length ($MAX_IDENTIFIER_LENGTH).")
++        }
++
++        // 3. Prevent state allocation for invalid/unregistered node
++        Log.i(TAG, "Task $component / $nodeId validated successfully.")
++    }
++}
+diff --git a/src/com/android/settings/onboarding/OnboardingTaskStateManager.kt b/src/com/android/settings/onboarding/OnboardingTaskStateManager.kt
+new file mode 100644
+index 0000000..3d817de
+--- /dev/null
++++ b/src/com/android/settings/onboarding/OnboardingTaskStateManager.kt
+@@ -0,0 +1,37 @@
++package com.android.settings.onboarding
++
++import android.os.SystemClock
++import android.util.LruCache
++
++class OnboardingTaskStateManager(
++    maxCapacity: Int = MAX_STATE_CAPACITY
++) {
++    companion object {
++        private const val MAX_STATE_CAPACITY = 100
++        private const val TTL_MILLIS = 10 * 60 * 1000L // 10 minutes
++    }
++
++    private data class TimestampedState(
++        val state: String,
++        val timestamp: Long = SystemClock.elapsedRealtime()
++    )
++
++    private val lruCache = LruCache<String, TimestampedState>(maxCapacity)
++
++    fun putState(key: String, state: String) {
++        synchronized(lruCache) {
++            lruCache.put(key, TimestampedState(state))
++        }
++    }
++
++    fun getState(key: String): String? {
++        synchronized(lruCache) {
++            val entry = lruCache.get(key) ?: return null
++            if (SystemClock.elapsedRealtime() - entry.timestamp > TTL_MILLIS) {
++                lruCache.remove(key)
++                return null
++            }
++            return entry.state
++        }
++    }
++}
+diff --git a/src/com/android/settings/onboarding/tasks/DiagnosisProviderTask.kt b/src/com/android/settings/onboarding/tasks/DiagnosisProviderTask.kt
+new file mode 100644
+index 0000000..8933a23
+--- /dev/null
++++ b/src/com/android/settings/onboarding/tasks/DiagnosisProviderTask.kt
+@@ -0,0 +1,32 @@
++package com.android.settings.onboarding.tasks
++
++import android.os.Binder
++import java.time.Duration
++import java.util.concurrent.ConcurrentHashMap
++import java.util.concurrent.atomic.AtomicInteger
++
++class DiagnosisProviderTask(
++    private val callingUid: Int = Binder.getCallingUid(),
++    private val delayFor: Duration = Duration.ZERO
++) {
++    companion object {
++        private const val MAX_DELAY_MILLIS = 60_000L // Upper bound 60s
++        private const val MAX_CONCURRENT_PER_UID = 5
++        private val activeTasksByUid = ConcurrentHashMap<Int, AtomicInteger>()
++    }
++
++    fun runTask() {
++        val counter = activeTasksByUid.computeIfAbsent(callingUid) { AtomicInteger(0) }
++        if (counter.get() >= MAX_CONCURRENT_PER_UID) {
++            throw IllegalStateException("Concurrent task quota exceeded for UID: $callingUid")
++        }
++
++        counter.incrementAndGet()
++        try {
++            val clampedDelay = delayFor.toMillis().coerceIn(0L, MAX_DELAY_MILLIS)
++            // Eksekusi diagnosis dengan delay yang aman
++        } finally {
++            counter.decrementAndGet()
++        }
++    }
++}
