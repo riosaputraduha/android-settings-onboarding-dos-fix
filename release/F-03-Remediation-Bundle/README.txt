@@ -41,6 +41,8 @@ DAFTAR ISI PAKET DISTRIBUSI
 4. [reports/]
    - FINAL_REPORT.md
      Laporan akhir lengkap hasil remediasi, metrik uji beban memori, dan deployment guide.
+   - SECURITY_ADVISORY.md
+     Dokumen resmi Security Advisory bahasa Inggris standar industri untuk disclosure / submission.
    - F-03.md
      Dokumen laporan temuan awal kerentanan keamanan F-03.
    - GUIDE_BUILD_AND_VERIFY.md

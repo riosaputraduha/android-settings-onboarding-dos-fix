@@ -21,10 +21,11 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 4. Parameter `delayFor` pada `DiagnosisProviderTask` tidak memiliki batas atas (*unbounded clamp*), menahan coroutine/thread di memori tanpa batas waktu.
 
 ## Struktur Repositori
-- `docs/` : Laporan teknis temuan F-03, Laporan Akhir Remediasi (`FINAL_REPORT.md`), serta Panduan Build & Verifikasi Emulator (`GUIDE_BUILD_AND_VERIFY.md`).
+- `docs/` : Laporan teknis temuan F-03, Laporan Akhir Remediasi (`FINAL_REPORT.md`), Security Advisory resmi bahasa Inggris (`SECURITY_ADVISORY.md`), serta Panduan Build & Verifikasi Emulator (`GUIDE_BUILD_AND_VERIFY.md`).
 - `pocs/` : Kode aplikasi PoC (`app/`), skrip pengujian, dan log bukti uji memori di emulator (`evidence/live-emulator-test.log`).
 - `patches/` : Rekomendasi perubahan kode dan berkas patch untuk mitigasi.
 - `tests/` : Test suite unit/integrasi dan prosedur verifikasi kestabilan memori.
+- `release/` : Paket distribusi rilis arsip ZIP lengkap (`F-03-Remediation-Release-Bundle.zip`) siap serah.
 
 ## Rencana Mitigasi
 - [x] Analisis akar masalah & reproduksi (Fase 1)
@@ -38,5 +39,7 @@ Repositori ini berisi dokumentasi analisis, pembuktian konsep (*Proof-of-Concept
 
 ## Hasil Remediasi & Panduan Teknis
 - 📄 Laporan akhir mitigasi & metrik pengujian: 👉 [docs/FINAL_REPORT.md](docs/FINAL_REPORT.md)
+- 🌐 Dokumen Security Advisory resmi (English): 👉 [docs/SECURITY_ADVISORY.md](docs/SECURITY_ADVISORY.md)
 - 🛠️ Panduan instalasi tools, kompilasi patch AOSP & uji emulator: 👉 [docs/GUIDE_BUILD_AND_VERIFY.md](docs/GUIDE_BUILD_AND_VERIFY.md)
 - 📊 Bukti log uji runtime emulator nyata: 👉 [pocs/POC-A17-F03-MEMDOS/evidence/live-emulator-test.log](pocs/POC-A17-F03-MEMDOS/evidence/live-emulator-test.log)
+- 📦 Paket distribusi rilis lengkap (ZIP): 👉 [release/F-03-Remediation-Release-Bundle.zip](release/F-03-Remediation-Release-Bundle.zip)
