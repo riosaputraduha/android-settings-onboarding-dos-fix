@@ -102,6 +102,10 @@ Seluruh skenario pengujian unit dan integrasi menghasilkan status **PASS**:
 | **Delta PSS per 1.000 panggilan** | +192 MB | +40 KB | **Stabil** |
 | **Kondisi Proses PID** | Crash fatal `OutOfMemoryError` | Tidak ada crash (0 crash) | **PASS** |
 
+### C. Validasi Runtime Emulator Nyata & Kompilasi AOSP WSL 2
+1. **Verifikasi Runtime Android 17 (emulator-5554):** Pengujian dinamis menggunakan aplikasi PoC (`com.untrusted.poc`, UID 10231) terhadap target sistem `com.android.settings` (PID 1448) dipantau secara real-time via `dumpsys meminfo`. Memori Dalvik Heap terpantau stabil pada 10.5 MB - 10.6 MB dan Total PSS pada ~42.0 MB tanpa lonjakan memori atau crash (tersimpan di `pocs/POC-A17-F03-MEMDOS/evidence/live-emulator-test.log`).
+2. **Verifikasi Kompilasi & Integritas Patch (WSL 2):** Patch dievaluasi langsung pada working tree AOSP `packages/apps/Settings`. Berkas patch diperbarui secara presisi via `git diff --staged` dan dikompilasi sukses menggunakan `kotlinc` (dengan classpath `android.jar` API 35) menghasilkan 9 berkas bytecode `.class` tanpa peringatan atau error.
+
 ---
 
 ## 5. Panduan Penerapan (*Deployment Instructions*)
